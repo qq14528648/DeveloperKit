@@ -13,7 +13,6 @@ public class VersionUtils {
     /**
      * 获取软件版本号
      *
-     * @param context
      * @return 版本号或-1
      */
     public static int versionCode(Context context) {
@@ -34,8 +33,6 @@ public class VersionUtils {
 
     /**
      * 获取软件版本号
-     *
-     * @param context
      * @return 版本号或-1
      */
     public static String versionName(Context context) {
