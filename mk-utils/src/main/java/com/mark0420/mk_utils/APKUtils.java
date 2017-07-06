@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.BuildConfig;
 import android.support.v4.content.FileProvider;
+import android.webkit.MimeTypeMap;
+
 import java.io.File;
 
 /**
@@ -19,17 +21,29 @@ public class APKUtils {
 
     public static void install(Context context, File apkFile) {
 
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        //判断是否是AndroidN以及更高的版本
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            Uri contentUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileProvider", apkFile);
-            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
-        } else {
-            intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent var2 = new Intent();
+        var2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        var2.setAction(Intent.ACTION_VIEW);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
+            Uri uriForFile = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", apkFile);
+            var2.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            var2.setDataAndType(uriForFile, context.getContentResolver().getType(uriForFile));
+        }else{
+            var2.setDataAndType(Uri.fromFile(apkFile), getMIMEType(apkFile));
         }
-        context.startActivity(intent);
+        try {
+            context.startActivity(var2);
+        } catch (Exception var5) {
+            var5.printStackTrace();
+            ToastUtils.makeText(context, "没有找到打开此类文件的程序");
+        }
+    }
+    public static  String getMIMEType(File var0) {
+        String var1 = "";
+        String var2 = var0.getName();
+        String var3 = var2.substring(var2.lastIndexOf(".") + 1, var2.length()).toLowerCase();
+        var1 = MimeTypeMap.getSingleton().getMimeTypeFromExtension(var3);
+        return var1;
     }
 
 }

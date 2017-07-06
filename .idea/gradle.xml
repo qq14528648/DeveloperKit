@@ -9,7 +9,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/mk-pay" />
             <option value="$PROJECT_DIR$/mk-utils" />
+            <option value="$PROJECT_DIR$/mk-view" />
+            <option value="$PROJECT_DIR$/mk-volley" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

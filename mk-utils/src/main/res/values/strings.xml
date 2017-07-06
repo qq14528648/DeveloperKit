@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MK-Utils</string>
+
     <string name="toast_sever_error">服务器错误,请退出后重试!</string>
     <string name="toast_data_error">数据错误,请退出后重试!</string>
     <string name="toast_network_error">网络错误,请检查网络!</string>
