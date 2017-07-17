@@ -1,7 +1,11 @@
 package com.mark0420.developerkit;
 
 import android.content.Context;
+
+import com.mark0420.mk_pay.PaymentBuilder;
 import com.mark0420.mk_utils.APKUtils;
+import com.mark0420.mk_view.SupportRecyclerView;
+
 import java.io.File;
 
 /**
@@ -12,6 +16,8 @@ import java.io.File;
 
 public class Demo {
     public static void text(Context context, File apkFile) {
+
         APKUtils.install(context, apkFile);
+
     }
 }

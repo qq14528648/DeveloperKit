@@ -29,6 +29,8 @@ dependencies {
     compile 'com.android.support:design:26.+'
     compile 'com.android.support:support-vector-drawable:26.+'
     testCompile 'junit:junit:4.12'
-    compile 'com.mark0420.mk_utils:mk-utils:0.0.1'
+    compile 'com.mark0420.mk_utils:mk-utils:0.0.2'
+    compile 'com.mark0420.mk_pay:mk-pay:0.0.2'
+    compile 'com.mark0420.mk_view:mk-view:0.0.2'
 }
 
