@@ -24,8 +24,9 @@ public class APKUtils {
         var2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         var2.setAction(Intent.ACTION_VIEW);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
-           // Uri uriForFile = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", apkFile);
-            Uri uriForFile = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".fileProvider", apkFile);
+            String authorities= context.getApplicationContext().getPackageName() + ".fileProvider";
+            Uri uriForFile = FileProvider.getUriForFile(context, authorities, apkFile);
+
             var2.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             var2.setDataAndType(uriForFile, context.getContentResolver().getType(uriForFile));
         }else{

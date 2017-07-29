@@ -10,7 +10,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
-        versionName "0.0.4"
+        versionName "0.0.5"
 
 
 
@@ -31,7 +31,7 @@ publish {
     userOrg = 'qq14528648'
     groupId = 'com.mark0420.mk_utils'
     artifactId = 'mk-utils'
-    version = '0.0.4'
+    version = '0.0.5'
     description = 'developerkit'
     website = "https://github.com/qq14528648/${rootProject.name}"
 }

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <external-path path="Android/data/com.bypal.instalment/" name="files_root" />
-    <external-path path="." name="external_storage_root" />
+    <!--<external-path path="Android/data/com.bypal.instalment/" name="files_root" />-->
+    <!--<external-path path="." name="external_storage_root" />-->
+
+    <!--name 暂时认为是解释说明用途,name不能相同，共享路径为path-->
+    <!--存在SD卡-->
+    <external-path path="bypal/apk/" name="." />
+    <!--不存在SD卡-->
+    <files-path path="apk/" name="no" />
+
 </paths>
