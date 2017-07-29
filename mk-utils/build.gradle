@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'maven'
-//apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'maven'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 26
@@ -10,7 +10,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
-        versionName "0.0.2"
+        versionName "0.0.4"
 
 
 
@@ -27,11 +27,11 @@ dependencies {
 
     compile 'com.android.support:appcompat-v7:26.+'
 }
-//publish {
-//    userOrg = 'qq14528648'
-//    groupId = 'com.mark0420.mk_utils'
-//    artifactId = 'mk-utils'
-//    version = '0.0.2'
-//    description = 'developerkit'
-//    website = "https://github.com/qq14528648/${rootProject.name}"
-//}
+publish {
+    userOrg = 'qq14528648'
+    groupId = 'com.mark0420.mk_utils'
+    artifactId = 'mk-utils'
+    version = '0.0.4'
+    description = 'developerkit'
+    website = "https://github.com/qq14528648/${rootProject.name}"
+}

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="recycler_divider">#1F000000</color>
+
+
+    <drawable name="recycler_divider">#00000000</drawable>
 </resources>

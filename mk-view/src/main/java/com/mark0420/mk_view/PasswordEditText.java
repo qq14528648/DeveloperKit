@@ -15,8 +15,8 @@ import android.view.MotionEvent;
 public class PasswordEditText extends ClearEditText{
 
     //资源
-    private final int INVISIBLE = R.drawable.close;
-    private final int VISIBLE = R.drawable.open;
+    private final int INVISIBLE = R.drawable.ic_close;
+    private final int VISIBLE = R.drawable.ic_open;
     //按钮宽度dp
     private int mWidth;
     //按钮的bitmap

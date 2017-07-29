@@ -1,11 +1,11 @@
 package com.mark0420.mk_view;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,16 +20,16 @@ import java.util.List;
  */
 public class BaseItemDecoration extends RecyclerView.ItemDecoration {
 
-    public static  final  int DEFAULT_DIVIDER_HEIGHT=1;// 默认为1
+    public static final int DEFAULT_DIVIDER_HEIGHT = 1;// 默认为1
 
-    private  ItemDecorationIndent itemDecorationIndent;
+    private ItemDecorationIndent itemDecorationIndent;
     private List<ItemDecorationIndent> itemDecorationIndents;
 
     private Paint mPaint;
     private Drawable mDivider;
-    private int mDividerHeight ;//分割线高度，默认为1px
+    private int mDividerHeight;//分割线高度，默认为1px
     private int mOrientation;//列表的方向：LinearLayoutManager.VERTICAL或LinearLayoutManager.HORIZONTAL
-    private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
+
 
     /**
      * 默认分割线：高度为2px，颜色为灰色
@@ -42,10 +42,8 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
             throw new IllegalArgumentException("请输入正确的参数！");
         }
         mOrientation = orientation;
+        mDivider = ContextCompat.getDrawable(context, R.drawable.recycler_divider);
 
-        final TypedArray a = context.obtainStyledAttributes(ATTRS);
-        mDivider = a.getDrawable(0);
-        a.recycle();
     }
 
 
@@ -67,35 +65,6 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
         mPaint.setStyle(Paint.Style.FILL);
     }
 
-//    /**
-//     * 自定义分割线
-//     *
-//     * @param context
-//     * @param orientation 列表方向
-//     * @param drawableId  分割线图片
-//     */
-
-//    public BaseItemDecoration(Context context, int orientation, int drawableId) {
-//        this(context, orientation);
-//        mDivider = ContextCompat.getDrawable(context, drawableId);
-//        mDividerHeight = mDivider.getIntrinsicHeight();
-//    }
-
-//    /**
-//     * 自定义分割线
-//     *
-//     * @param context
-//     * @param orientation   列表方向
-//     * @param dividerHeight 分割线高度
-//     * @param dividerColor  分割线颜色
-//     */
-//    public BaseItemDecoration(Context context, int orientation, int dividerHeight, int dividerColor) {
-//        this(context, orientation);
-//        mDividerHeight = dividerHeight;
-//        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-//        mPaint.setColor(dividerColor);
-//        mPaint.setStyle(Paint.Style.FILL);
-//    }
 
 
     //获取分割线尺寸
@@ -123,9 +92,9 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
 
         final int childSize = parent.getChildCount();
 
-        LinearLayoutManager linearLayoutManager= (LinearLayoutManager) parent.getLayoutManager();
+        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) parent.getLayoutManager();
 
-        int  visibleItemPosition  = linearLayoutManager.findFirstVisibleItemPosition();
+        int visibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
 
         for (int i = 0; i < childSize; i++) {
             final View child = parent.getChildAt(i);
@@ -134,15 +103,15 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
             final int bottom = top + mDividerHeight;
 
             int indentLeft = 0;//分割线缩进,
-            int indentRight=0;//分割线缩进,
+            int indentRight = 0;//分割线缩进,
 
-            if (itemDecorationIndent!=null){
-                indentLeft=itemDecorationIndent.left;
-                indentRight=itemDecorationIndent.right;
+            if (itemDecorationIndent != null) {
+                indentLeft = itemDecorationIndent.left;
+                indentRight = itemDecorationIndent.right;
 
-            }else if(itemDecorationIndents!=null){
-                indentLeft=itemDecorationIndents.get(i+visibleItemPosition).left;
-                indentRight=itemDecorationIndents.get(i+visibleItemPosition).right;
+            } else if (itemDecorationIndents != null) {
+                indentLeft = itemDecorationIndents.get(i + visibleItemPosition).left;
+                indentRight = itemDecorationIndents.get(i + visibleItemPosition).right;
             }
 
             if (mDivider != null) {

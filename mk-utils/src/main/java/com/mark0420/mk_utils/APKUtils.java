@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.BuildConfig;
 import android.support.v4.content.FileProvider;
 import android.webkit.MimeTypeMap;
 
@@ -19,24 +18,28 @@ import java.io.File;
 
 public class APKUtils {
 
-    public static void install(Context context, File apkFile) {
+    public static void install(Context context, File apkFile)  throws  Exception{
 
         Intent var2 = new Intent();
         var2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         var2.setAction(Intent.ACTION_VIEW);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
-            Uri uriForFile = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", apkFile);
+           // Uri uriForFile = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", apkFile);
+            Uri uriForFile = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".fileProvider", apkFile);
             var2.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             var2.setDataAndType(uriForFile, context.getContentResolver().getType(uriForFile));
         }else{
             var2.setDataAndType(Uri.fromFile(apkFile), getMIMEType(apkFile));
         }
-        try {
-            context.startActivity(var2);
-        } catch (Exception var5) {
-            var5.printStackTrace();
-            ToastUtils.makeText(context, "没有找到打开此类文件的程序");
-        }
+        context.startActivity(var2);
+
+//
+//        try {
+//            context.startActivity(var2);
+//        } catch (Exception var5) {
+//            var5.printStackTrace();
+//            ToastUtils.makeText(context, "没有找到打开此类文件的程序");
+//        }
     }
     public static  String getMIMEType(File var0) {
         String var1 = "";

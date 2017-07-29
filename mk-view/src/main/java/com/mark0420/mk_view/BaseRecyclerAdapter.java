@@ -23,21 +23,22 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     protected List<T> beans = new ArrayList();
 
 
-    public SparseBooleanArray enables=new SparseBooleanArray();
+    public SparseBooleanArray enables = new SparseBooleanArray();
 
     public BaseRecyclerAdapter() {
         initEnables(true);
     }
 
     public void setEnable(int position) {
-        enables.put(position,false);
+        enables.put(position, false);
         notifyDataSetChanged();
 
     }
+
     // 此方法一定要在数据加载之后调用
     public void initEnables(boolean initEnable) {
-        for (int i=0;i<getItems().size();i++){
-            enables.put(i,initEnable);
+        for (int i = 0; i < getItems().size(); i++) {
+            enables.put(i, initEnable);
         }
     }
 
@@ -47,8 +48,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
      * @param beans
      */
     public BaseRecyclerAdapter addItems(List<T> beans) {
-        addItems(beans, true,true);
-        return  this;
+        addItems(beans, true, true);
+        return this;
     }
 
     /**
@@ -60,27 +61,34 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         if (clear) this.beans.clear();
         this.beans.addAll(beans);
         if (notify) notifyDataSetChanged();
-        return  this;
+        return this;
     }
 
     /**
      * 移除数据集,自动更新数据
-     *
      */
     public BaseRecyclerAdapter removeItems(List<T> beans, boolean notify) {
         this.beans.removeAll(beans);
         if (notify) notifyDataSetChanged();
-        return  this;
+        return this;
     }
 
     /**
      * 移除数据,自动更新数据
-     *
      */
     public BaseRecyclerAdapter removeItem(int p, boolean notify) {
         this.beans.remove(p);
-        if (notify)  notifyItemChanged(p);
-        return  this;
+        if (notify) notifyItemChanged(p);
+        return this;
+    }
+
+
+    public BaseRecyclerAdapter replaceItem(int p, T bean) {
+
+        this.beans.remove(p);
+        this.beans.add(p, bean);
+        notifyItemChanged(p);
+        return this;
     }
 
     /**
@@ -132,8 +140,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     @Override
     @CallSuper
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            BaseRecyclerHolder h = (BaseRecyclerHolder) holder;
-            h.position = position;
+        BaseRecyclerHolder h = (BaseRecyclerHolder) holder;
+        h.position = position;
     }
 
     /**
@@ -145,14 +153,15 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
 
 
         public BaseRecyclerHolder(View v) {
-         this(v,true);
+            this(v, true);
         }
 
         public BaseRecyclerHolder(View v, boolean onClick) {
             super(v);
             if (onClick)
-            itemView.setOnClickListener(this);
+                itemView.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View v) {
             if (null != onRecyclerViewListener) {
@@ -160,12 +169,13 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
             }
         }
     }
-    private void setTypeFace(Context c, TextView v) {
-        AssetManager mgr = c.getAssets();//得到AssetManager
-        Typeface tf = Typeface.createFromAsset(mgr, "fonts/Roboto-Black.ttf");//根据路径得到Typeface
-        v.setTypeface(tf);//设置字体
-        v.getPaint().setFakeBoldText(true);
-    }
+
+//    private void setTypeFace(Context c, TextView v) {
+//        AssetManager mgr = c.getAssets();//得到AssetManager
+//        Typeface tf = Typeface.createFromAsset(mgr, "fonts/Roboto-Black.ttf");//根据路径得到Typeface
+//        v.setTypeface(tf);//设置字体
+//        v.getPaint().setFakeBoldText(true);
+//    }
 
 
 }
