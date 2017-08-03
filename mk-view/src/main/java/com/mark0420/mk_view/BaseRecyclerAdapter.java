@@ -1,14 +1,10 @@
 package com.mark0420.mk_view;
 
 
-import android.content.Context;
-import android.content.res.AssetManager;
-import android.graphics.Typeface;
+
 import android.support.annotation.CallSuper;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,77 +13,96 @@ import java.util.List;
  * Created by admin on 2016/07/08
  * 邮箱：mark14528648@yahoo.co.jp
  * 适配器基类{@link  }
+ * additem，additems 比较特殊，会 clear且notifyDataSetChanged
+ * 其它 insertItems
+ * removeItems
+ * replaceItems， 。更改复数数据时（即 s），会notifyDataSetChanged，
+ * 更改单个数据 时，不会会notifyDataSetChanged
+ *
  */
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
 
     protected List<T> beans = new ArrayList();
 
 
-    public SparseBooleanArray enables = new SparseBooleanArray();
-
-    public BaseRecyclerAdapter() {
-        initEnables(true);
-    }
-
-    public void setEnable(int position) {
-        enables.put(position, false);
+    /**
+     * 添加数据集,清空并自动更新数据
+     *
+     * @param items
+     */
+    public BaseRecyclerAdapter addItems(List<T> items) {
+        beans.clear();
+        beans.addAll(items);
         notifyDataSetChanged();
-
+        return this;
     }
-
-    // 此方法一定要在数据加载之后调用
-    public void initEnables(boolean initEnable) {
-        for (int i = 0; i < getItems().size(); i++) {
-            enables.put(i, initEnable);
-        }
-    }
-
     /**
-     * 添加数据集,清空并自动更新数据
+     * 添加单条数据 ,不清空且不自动更新数据,
      *
-     * @param beans
+     * @param  item
      */
-    public BaseRecyclerAdapter addItems(List<T> beans) {
-        addItems(beans, true, true);
+
+    public BaseRecyclerAdapter addItem(T item) {
+        beans.clear();
+        beans.add(item);
+        notifyDataSetChanged();
         return this;
     }
 
     /**
-     * 添加数据集,清空并自动更新数据
+     * 插入数据集,清空并自动更新数据
      *
-     * @param beans
+     * @param items
      */
-    public BaseRecyclerAdapter addItems(List<T> beans, boolean clear, boolean notify) {
-        if (clear) this.beans.clear();
-        this.beans.addAll(beans);
-        if (notify) notifyDataSetChanged();
+    public BaseRecyclerAdapter insertItems(int p,List<T> items) {
+
+        beans.addAll(p,items);
+        notifyDataSetChanged();
         return this;
     }
+    /**
+     * 插入单条数据 ,不清空且不自动更新数据
+     *
+     * @param  item
+     */
+
+    public BaseRecyclerAdapter insertItem(int p,T item) {
+        beans.add(p,item);
+        return this;
+    }
+
 
     /**
      * 移除数据集,自动更新数据
      */
-    public BaseRecyclerAdapter removeItems(List<T> beans, boolean notify) {
-        this.beans.removeAll(beans);
-        if (notify) notifyDataSetChanged();
+    public BaseRecyclerAdapter removeItems(List<T> items) {
+        this.beans.removeAll(items);
+        notifyDataSetChanged();
         return this;
     }
 
     /**
      * 移除数据,自动更新数据
      */
-    public BaseRecyclerAdapter removeItem(int p, boolean notify) {
+    public BaseRecyclerAdapter removeItem(int p) {
         this.beans.remove(p);
-        if (notify) notifyItemChanged(p);
         return this;
     }
 
 
-    public BaseRecyclerAdapter replaceItem(int p, T bean) {
 
+    public BaseRecyclerAdapter replaceItems(List<T> items) {
+        this.beans.removeAll(items);
+        this.beans.addAll(items);
+        notifyDataSetChanged();
+        return this;
+    }
+
+
+
+    public BaseRecyclerAdapter replaceItem(int p, T bean) {
         this.beans.remove(p);
         this.beans.add(p, bean);
-        notifyItemChanged(p);
         return this;
     }
 
@@ -98,15 +113,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         this.beans.clear();
     }
 
-    /**
-     * 添加单条数据 ,不清空且不自动更新数据
-     *
-     * @param bean
-     */
-
-    public void addItem(T bean) {
-        this.beans.add(bean);
-    }
 
     public T getItem(int p) {
         return beans.get(p);
