@@ -1,7 +1,6 @@
 package com.mark0420.mk_view;
 
 
-
 import android.support.annotation.CallSuper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,7 +17,6 @@ import java.util.List;
  * removeItems
  * replaceItems， 。更改复数数据时（即 s），会notifyDataSetChanged，
  * 更改单个数据 时，不会会notifyDataSetChanged
- *
  */
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
 
@@ -26,7 +24,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
 
 
     /**
-     * 添加数据集,清空并自动更新数据
+     * 添加数据集, 自动更新数据
      *
      * @param items
      */
@@ -36,10 +34,11 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         notifyDataSetChanged();
         return this;
     }
+
     /**
-     * 添加单条数据 ,不清空且不自动更新数据,
+     * 添加单条数据 , 自动更新数据,
      *
-     * @param  item
+     * @param item
      */
 
     public BaseRecyclerAdapter addItem(T item) {
@@ -50,24 +49,25 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     }
 
     /**
-     * 插入数据集,清空并自动更新数据
+     * 插入数据集 自动更新数据
      *
      * @param items
      */
-    public BaseRecyclerAdapter insertItems(int p,List<T> items) {
+    public BaseRecyclerAdapter insertItems(int p, List<T> items) {
 
-        beans.addAll(p,items);
+        beans.addAll(p, items);
         notifyDataSetChanged();
         return this;
     }
+
     /**
-     * 插入单条数据 ,不清空且不自动更新数据
+     * 插入单条数据 ,
      *
-     * @param  item
+     * @param item
      */
 
-    public BaseRecyclerAdapter insertItem(int p,T item) {
-        beans.add(p,item);
+    public BaseRecyclerAdapter insertItem(int p, T item) {
+        beans.add(p, item);
         return this;
     }
 
@@ -76,33 +76,33 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
      * 移除数据集,自动更新数据
      */
     public BaseRecyclerAdapter removeItems(List<T> items) {
-        this.beans.removeAll(items);
+        beans.removeAll(items);
         notifyDataSetChanged();
         return this;
     }
 
     /**
-     * 移除数据,自动更新数据
+     * 移除数据,
      */
     public BaseRecyclerAdapter removeItem(int p) {
-        this.beans.remove(p);
+        beans.remove(p);
         return this;
     }
 
 
-
     public BaseRecyclerAdapter replaceItems(List<T> items) {
-        this.beans.removeAll(items);
-        this.beans.addAll(items);
+        beans.removeAll(items);
+        beans.addAll(items);
         notifyDataSetChanged();
         return this;
     }
 
 
-
     public BaseRecyclerAdapter replaceItem(int p, T bean) {
-        this.beans.remove(p);
-        this.beans.add(p, bean);
+        beans.remove(p);
+        beans.add(p, bean);
+//        notifyItemInserted(p);
+//        notifyItemChanged(p);
         return this;
     }
 
@@ -118,6 +118,9 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         return beans.get(p);
     }
 
+    /**
+     * 数据集
+     */
 
     public List<T> getItems() {
         return beans;
@@ -129,17 +132,28 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     }
 
 
-    public interface OnRecyclerViewListener {
+    interface OnRecyclerViewListener {
         void onItemClick(int position);
+    }
+
+
+    interface OnRecyclerViewLongListener {
+
+        boolean onItemLongClick(int position);
     }
 
     private OnRecyclerViewListener onRecyclerViewListener;
 
-    public BaseRecyclerAdapter setOnRecyclerViewListener(OnRecyclerViewListener onRecyclerViewListener) {
-        this.onRecyclerViewListener = onRecyclerViewListener;
+    public OnRecyclerViewLongListener onRecyclerViewLongListener;
+
+    public BaseRecyclerAdapter setOnRecyclerViewListener(OnRecyclerViewListener listener) {
+        this.onRecyclerViewListener = listener;
         return this;
     }
-
+    public BaseRecyclerAdapter setOnRecyclerViewLongListener(OnRecyclerViewLongListener listener) {
+        onRecyclerViewLongListener = listener;
+        return this;
+    }
     /**
      * 需要子类重写,不能去除super
      */
@@ -153,19 +167,24 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     /**
      * 可点击的需要子类去继承
      */
-    public class BaseRecyclerHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class BaseRecyclerHolder extends RecyclerView.ViewHolder implements View.OnClickListener ,View.OnLongClickListener {
 
         public int position;
 
-
+        /**
+         * 默认只支持单按，不支持长按
+         * @param v
+         */
         public BaseRecyclerHolder(View v) {
-            this(v, true);
+            this(v, true,false);
         }
 
-        public BaseRecyclerHolder(View v, boolean onClick) {
+        public BaseRecyclerHolder(View v, boolean onClick,boolean onLongClick) {
             super(v);
             if (onClick)
                 itemView.setOnClickListener(this);
+            if (onLongClick)
+                itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -173,6 +192,14 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
             if (null != onRecyclerViewListener) {
                 onRecyclerViewListener.onItemClick(position);
             }
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if (null != onRecyclerViewLongListener) {
+                return onRecyclerViewLongListener.onItemLongClick(position);
+            }
+            return false;
         }
     }
 
