@@ -12,7 +12,7 @@ import android.view.MotionEvent;
 /**
  * Created by 家杰 on 2015/11/20.
  */
-public class PasswordEditText extends ClearEditText{
+public class PasswordEditText extends ClearEditText {
 
     //资源
     private final int INVISIBLE = R.drawable.ic_edit_close;

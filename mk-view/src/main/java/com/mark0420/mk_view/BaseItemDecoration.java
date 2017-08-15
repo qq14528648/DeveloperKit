@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,7 +24,8 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
     public static final int DEFAULT_DIVIDER_HEIGHT = 1;// 默认为1
 
     private ItemDecorationIndent itemDecorationIndent;
-    private List<ItemDecorationIndent> itemDecorationIndents;
+
+    private List<Integer> positions;
 
     private Paint mPaint;
     private Drawable mDivider;
@@ -54,17 +56,27 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(dividerColor);//Color.parseColor("#87CEFA")
         mPaint.setStyle(Paint.Style.FILL);
-    }
 
-    public BaseItemDecoration(Context context, int dividerHeight, int dividerColor, List<ItemDecorationIndent> itemDecorationIndent) {
-        this(context, LinearLayoutManager.HORIZONTAL);
-        mDividerHeight = dividerHeight;
-        this.itemDecorationIndents = itemDecorationIndent;
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(dividerColor);//Color.parseColor("#87CEFA")
-        mPaint.setStyle(Paint.Style.FILL);
-    }
+        if (itemDecorationIndent.positions != null) {
 
+            positions = new ArrayList<>();
+
+            for (int i = 0; i < itemDecorationIndent.positions.length; i++) {
+
+                int[] pos = itemDecorationIndent.positions[i];
+
+                int min = pos[0];
+                int max = pos[1];
+                for (int j = min; j <= max; j++) {//<=包含最后坐标，<则不包含
+
+                    positions.add(j);
+                }
+
+            }
+
+        }
+
+    }
 
 
     //获取分割线尺寸
@@ -96,7 +108,52 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
 
         int visibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
 
+        /////////////////////////////////////////////绘制第0个item的线///////////////////////////////////////////////////////////////////
+//        {
+//            if (childSize != 0) {
+//                final View child = parent.getChildAt(0);
+//                RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
+//                final int top = child.getTop() + layoutParams.topMargin;
+//                final int bottom = top + mDividerHeight;
+//
+//                int indentLeft = 0;//分割线缩进,
+//                int indentRight = 0;//分割线缩进,
+//
+//                if (itemDecorationIndent != null) {
+//
+//                    if (positions != null) {
+//
+//                        if (positions.contains(0 + visibleItemPosition)) {
+//                            indentLeft = itemDecorationIndent.left;
+//                            indentRight = itemDecorationIndent.right;
+//                        }
+//
+//                    } else {
+//
+//                        indentLeft = itemDecorationIndent.left;
+//                        indentRight = itemDecorationIndent.right;
+//                    }
+//
+//
+//                }
+//
+//                if (mDivider != null) {
+//
+//                    mDivider.setBounds(left + indentLeft, top, right - indentRight, bottom);
+//
+//                    mDivider.draw(canvas);
+//                }
+//                if (mPaint != null) {
+//                    canvas.drawRect(left + indentLeft, top, right - indentRight, bottom, mPaint);
+//                }
+//
+//            }
+//        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         for (int i = 0; i < childSize; i++) {
+
+
             final View child = parent.getChildAt(i);
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int top = child.getBottom() + layoutParams.bottomMargin;
@@ -106,12 +163,23 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
             int indentRight = 0;//分割线缩进,
 
             if (itemDecorationIndent != null) {
-                indentLeft = itemDecorationIndent.left;
-                indentRight = itemDecorationIndent.right;
 
-            } else if (itemDecorationIndents != null) {
-                indentLeft = itemDecorationIndents.get(i + visibleItemPosition).left;
-                indentRight = itemDecorationIndents.get(i + visibleItemPosition).right;
+                if (positions!= null) {
+
+                   if (positions.contains(i+visibleItemPosition)){
+                       indentLeft = itemDecorationIndent.left;
+                       indentRight = itemDecorationIndent.right;
+
+                   }
+
+
+                } else {
+
+                    indentLeft = itemDecorationIndent.left;
+                    indentRight = itemDecorationIndent.right;
+                }
+
+
             }
 
             if (mDivider != null) {

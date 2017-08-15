@@ -103,15 +103,15 @@ public class SupportRecyclerView extends RecyclerView {
     /**
      * ViewHolder that support click and longclick event
      */
-    public static class SupportViewHolder extends RecyclerView.ViewHolder {
+    public static class SupportViewHolder extends ViewHolder {
 
         public SupportViewHolder(View itemView) {
             super(itemView);
         }
     }
 
-    public static abstract class SupportAdapter extends RecyclerView.Adapter<SupportViewHolder>
-            implements View.OnClickListener, View.OnLongClickListener {
+    public static abstract class SupportAdapter extends Adapter<SupportViewHolder>
+            implements OnClickListener, OnLongClickListener {
 
         private OnRecyclerViewItemClickListener onClickListener;
         private OnRecyclerViewItemLongClickListener onLongClickListener;
@@ -180,7 +180,7 @@ public class SupportRecyclerView extends RecyclerView {
         boolean onRecyclerViewItemLongClick(View view, int pos);
     }
 
-    public static class RecyclerItemClickListener implements View.OnClickListener {
+    public static class RecyclerItemClickListener implements OnClickListener {
 
         private int mPos;
         private OnRecyclerViewItemClickListener mClickListener;
@@ -199,7 +199,7 @@ public class SupportRecyclerView extends RecyclerView {
     }
 
 
-    public static class RecyclerItemLongClickListener implements View.OnLongClickListener {
+    public static class RecyclerItemLongClickListener implements OnLongClickListener {
         private int mPos;
         private OnRecyclerViewItemLongClickListener mLongClickListener;
 

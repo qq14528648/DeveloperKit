@@ -4,9 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +21,9 @@ public abstract class FooterRecyclerAdapter<T> extends BaseRecyclerAdapter<T> {
     private static final int FOOTER = Integer.MAX_VALUE;
 
 
-    public FooterRecyclerAdapter() {
-        beans.add(null);
-    }
-
     @Override
     public int getItemViewType(int position) {
-        if (position == getItemCount() - 1)
+        if (position == getItemCount()-1)
             return FOOTER;
         return getItemViewTypeExcludeFooter(position);
     }
@@ -58,9 +53,12 @@ public abstract class FooterRecyclerAdapter<T> extends BaseRecyclerAdapter<T> {
 
     @Override
     public FooterRecyclerAdapter insertItems(int p, List<T> items) {
-        if (p > beans.size() - 1)
+        if (p >getItemCount())
             throw new IndexOutOfBoundsException(
                     "Index: " + p + ", Size: " + (beans.size() - 1));
+        if (p >getItemCount()-1)
+            throw new IndexOutOfBoundsException(
+                    "cant insert footer item!");
         beans.addAll(p, items);
         notifyDataSetChanged();
         return this;
@@ -73,9 +71,12 @@ public abstract class FooterRecyclerAdapter<T> extends BaseRecyclerAdapter<T> {
      */
     @Override
     public FooterRecyclerAdapter insertItem(int p, T item) {
-        if (p > beans.size() - 1)
+        if (p > getItemCount())
             throw new IndexOutOfBoundsException(
                     "Index: " + p + ", Size: " + (beans.size() - 1));
+        if (p > getItemCount()-1)
+            throw new IndexOutOfBoundsException(
+                    "cant insert footer item!");
         beans.add(p, item);
         return this;
     }
@@ -89,9 +90,13 @@ public abstract class FooterRecyclerAdapter<T> extends BaseRecyclerAdapter<T> {
 
     @Override
     public FooterRecyclerAdapter removeItem(int p) {
-        if (p > beans.size() - 1)
+        if (p >getItemCount())
             throw new IndexOutOfBoundsException(
                     "Index: " + p + ", Size: " + (beans.size() - 1));
+
+        if (p >getItemCount()-1)
+            throw new IndexOutOfBoundsException(
+                    "cant remove footer item!");
         beans.remove(p);
         return this;
     }
@@ -106,9 +111,12 @@ public abstract class FooterRecyclerAdapter<T> extends BaseRecyclerAdapter<T> {
 
     @Override
     public FooterRecyclerAdapter replaceItem(int p, T bean) {
-        if (p > beans.size() - 1)
+        if (p > getItemCount())
             throw new IndexOutOfBoundsException(
                     "Index: " + p + ", Size: " + (beans.size() - 1));
+        if (p >getItemCount()-1)
+            throw new IndexOutOfBoundsException(
+                    "cant replace footer item!");
         beans.remove(p);
         beans.add(p, bean);
 //        notifyItemInserted(p);
@@ -125,16 +133,19 @@ public abstract class FooterRecyclerAdapter<T> extends BaseRecyclerAdapter<T> {
 
     @Override
     public T getItem(int p) {
-        if (p > beans.size() - 1)
+        if (p > getItemCount())
             throw new IndexOutOfBoundsException(
                     "Index: " + p + ", Size: " + (beans.size() - 1));
+        if (p > getItemCount()-1)
+            throw new IndexOutOfBoundsException(
+                    "cant get footer item!");
         return beans.get(p);
     }
 
     @Override
     public List<T> getItems() {
         List<T> b = new ArrayList<>();
-        for (int i = 0; i < beans.size(); i++) {
+        for (int i = 0; i < getItemsSize(); i++) {
 
             b.add(beans.get(i));
         }
@@ -142,19 +153,17 @@ public abstract class FooterRecyclerAdapter<T> extends BaseRecyclerAdapter<T> {
         return b;
 
     }
-
     @Override
-    public int getItemCount() {
-        return beans.size() - 1;
+    public int getItemsSize() {
+        return beans.size()-1;
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         if (viewType == FOOTER) {
 
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             View footer = LayoutInflater.from(parent.getContext()).inflate(getFooterLayout(), parent, false);
             footer.setLayoutParams(lp);
             return new FooterHolder(footer);
@@ -171,10 +180,16 @@ public abstract class FooterRecyclerAdapter<T> extends BaseRecyclerAdapter<T> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        if (position != getItemCount() - 1) {
+        if (position == getItemCount()-1) {
+            FooterHolder h = (FooterHolder) holder;
+            setOnFooterView(h.v);
+        }else{
             onBindViewHolderExcludeFooter(holder,position);
+
         }
     }
+
+    protected   void setOnFooterView(View v){ };
 
 
     public  abstract  void onBindViewHolderExcludeFooter(RecyclerView.ViewHolder holder, int position) ;
@@ -186,9 +201,10 @@ public abstract class FooterRecyclerAdapter<T> extends BaseRecyclerAdapter<T> {
      */
 
     class FooterHolder extends BaseRecyclerHolder {
-
+        View v;
         public FooterHolder(View v) {
-            super(v);
+            super(v,false,false);
+            this.v=v;
             itemView.setOnClickListener(this);
 
         }

@@ -35,6 +35,14 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         return this;
     }
 
+//    public BaseRecyclerAdapter addItems2(List<T> items) {
+//        beans.clear();
+//        beans.addAll(items);
+//        beans.addAll(items);
+//        notifyDataSetChanged();
+//        return this;
+//    }
+
     /**
      * 添加单条数据 , 自动更新数据,
      *
@@ -126,18 +134,32 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         return beans;
     }
 
+
+    /**
+     * 数据集大小
+     * @return
+     */
+
+    public int getItemsSize() {
+        return beans.size();
+    }
+
+    /**
+     * 外部尽量少用此方法，含有 footer 时，需要自己计算此值，推荐使用上面的方法
+     * @return
+     */
     @Override
     public int getItemCount() {
         return beans.size();
     }
 
 
-    interface OnRecyclerViewListener {
+    public interface OnRecyclerViewListener {
         void onItemClick(int position);
     }
 
 
-    interface OnRecyclerViewLongListener {
+    public  interface OnRecyclerViewLongListener {
 
         boolean onItemLongClick(int position);
     }
@@ -150,6 +172,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         this.onRecyclerViewListener = listener;
         return this;
     }
+
     public BaseRecyclerAdapter setOnRecyclerViewLongListener(OnRecyclerViewLongListener listener) {
         onRecyclerViewLongListener = listener;
         return this;
