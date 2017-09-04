@@ -54,7 +54,12 @@ public class ClearEditText extends AppCompatEditText {
 
     private boolean  isUseableClear=true;
 
+    private boolean  isDefaultVisibility=true;
 
+
+    public void setDefaultVisibility(boolean defaultVisibility) {
+        isDefaultVisibility = defaultVisibility;
+    }
 
     public ClearEditText(final Context context) {
         super(context);
@@ -106,6 +111,8 @@ public class ClearEditText extends AppCompatEditText {
         if (!isEnabled())
             return;
         if (!isUseableClear)
+            return;
+        if (!isDefaultVisibility)
             return;
         canvas.setDrawFilter(new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG));//抗锯齿
         if (mAnimator_visible.isRunning()) {

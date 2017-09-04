@@ -64,6 +64,7 @@ public class PaymentBuilder {
         mIllustrateTextView = (TextView) contentView.findViewById(R.id.illustrateTextView);
         mMoneyTextView = (TextView) contentView.findViewById(R.id.moneyTextView);
         mPswView = (GridPasswordView) contentView.findViewById(R.id.pswView);
+        mPswView.setClickable(false);
         mForgetPwdTextView = (TextView) contentView.findViewById(R.id.forgetPwdTextView);
         mCloseTextView.setOnClickListener(new View.OnClickListener() {
             @Override
