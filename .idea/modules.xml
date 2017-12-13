@@ -7,7 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/mk-pay/mk-pay.iml" filepath="$PROJECT_DIR$/mk-pay/mk-pay.iml" />
       <module fileurl="file://$PROJECT_DIR$/mk-utils/mk-utils.iml" filepath="$PROJECT_DIR$/mk-utils/mk-utils.iml" />
       <module fileurl="file://$PROJECT_DIR$/mk-view/mk-view.iml" filepath="$PROJECT_DIR$/mk-view/mk-view.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mk-volley/mk-volley.iml" filepath="$PROJECT_DIR$/mk-volley/mk-volley.iml" />
     </modules>
   </component>
 </project>

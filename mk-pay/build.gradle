@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
-        versionName "0.0.6"
+        versionName "0.0.8"
 
 
 
@@ -32,7 +32,7 @@ publish {
     userOrg = 'qq14528648'
     groupId = 'com.mark0420.mk_pay'
     artifactId = 'mk-pay'
-    version = '0.0.6'
+    version = '0.0.8'
     description = 'developerkit'
     website = "https://github.com/qq14528648/${rootProject.name}"
 }

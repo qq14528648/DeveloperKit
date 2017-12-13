@@ -65,6 +65,9 @@ public class PaymentBuilder {
         mMoneyTextView = (TextView) contentView.findViewById(R.id.moneyTextView);
         mPswView = (GridPasswordView) contentView.findViewById(R.id.pswView);
         mPswView.setClickable(false);
+        mPswView.setFocusable(false);
+        mPswView.setFocusableInTouchMode(false);
+        mPswView.clearFocus();
         mForgetPwdTextView = (TextView) contentView.findViewById(R.id.forgetPwdTextView);
         mCloseTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,5 +170,11 @@ public class PaymentBuilder {
         mPaymentBuilder = paymentBuilder;
         return this;
 
+    }
+
+    public PaymentBuilder changeFocus() {
+        mPswView.clearFocus();
+        mCloseTextView.requestFocus();
+        return this;
     }
 }

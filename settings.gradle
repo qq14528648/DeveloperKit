@@ -1,1 +1,1 @@
-include ':app', ':mk-utils', ':mk-volley', ':mk-view', ':mk-pay'
+include ':app', ':mk-utils', ':mk-view', ':mk-pay'
