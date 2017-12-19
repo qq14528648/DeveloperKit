@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/iconImageView"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_margin="8dp"
+        android:paddingLeft="8dp"
+        tools:src="@drawable/ic_bank_card" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:padding="5dp"
+            android:textColor="#DE000000"
+            android:textSize="14sp"
+            tools:text="BOC（6580）" />
+
+        <TextView
+            android:id="@+id/tipTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:textColor="#90000000"
+            android:textSize="10sp"
+            android:visibility="gone"
+            tools:text="Withdrawal fee:0.1%" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/guidingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:drawableRight="@drawable/ic_indicator"
+
+        />
+
+</LinearLayout>

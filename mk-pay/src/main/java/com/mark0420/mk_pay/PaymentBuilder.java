@@ -8,10 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.jungly.gridpasswordview.GridPasswordView;
+
+import java.util.List;
 
 
 /**
@@ -24,157 +31,313 @@ public class PaymentBuilder {
     /**
      * 事件接口
      */
-    private final  static  int PASSWORD_LENGTH=6;
+    private final static int PASSWORD_LENGTH = 6;
 
-    public interface IPaymentBuilder {
+    public interface ICallBack {
 
-        void forgetPwd();
+        void close();
 
-        void inputFinish(String pwd);
+        void forgetPassword();
+
+        void inputFinish(String pwd, int inflowPosition);
     }
 
     private Context mContext;
-    private View contentView;
-    private PopupWindow popupWindow;
-    private GridView gridView;
-    private IPaymentBuilder mPaymentBuilder;
+    private View mContentView;
+    private PopupWindow mPopupWindow;
+    private GridView mGridView;
+    private ICallBack mICallBack;
     private GridAdapter mGridAdapter;
 
     private TextView mCloseTextView;
-    private TextView mIllustrateTextView;
     private TextView mMoneyTextView;
     private GridPasswordView mPswView;
     private TextView mForgetPwdTextView;
+    private TextView mFlowsTextView;
 
-    private Handler mHandler=new Handler();
+    private LinearLayout mInflowLinearLayout;
+    private ImageView mIconImageView;
+    private TextView mInflowTextView;
 
-    public PaymentBuilder(Context context) {
+    private int mInflowPosition = -1;//金额流入方式的位置（多种流入方式时，输入完密码时返回。，否则为-1）
+
+    private List<Inflow> mInflows;//金额流入方式集合（多种流入方式时，有值，否则为null）
+
+    private Handler mHandler = new Handler();
+
+    /**
+     * @param context
+     * @param inflows 金额流入方式集合,没有则直接传null
+     */
+
+    public PaymentBuilder(Context context, List<Inflow> inflows) {
+
+        mInflows = inflows;
+
+        init(context);
+    }
+
+    private void init(Context context) {
+
         mContext = context;
-        contentView = LayoutInflater.from(mContext).inflate(
+        mContentView = LayoutInflater.from(mContext).inflate(
                 R.layout.password_layout, null);// 定义后退弹出框
 
-        gridView = (GridView) contentView.findViewById(R.id.gridView);// 泡泡窗口的布局
-        mGridAdapter= new GridAdapter(mContext);
-        gridView.setAdapter(mGridAdapter);
-        popupWindow = new PopupWindow(contentView,
+        mGridView = (GridView) mContentView.findViewById(R.id.gridView);// 泡泡窗口的布局
+        mGridAdapter = new GridAdapter(mContext);
+        mGridView.setAdapter(mGridAdapter);
+        mPopupWindow = new PopupWindow(mContentView,
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
-        popupWindow.setFocusable(true);
-        mCloseTextView = (TextView) contentView.findViewById(R.id.closeTextView);
-        mIllustrateTextView = (TextView) contentView.findViewById(R.id.illustrateTextView);
-        mMoneyTextView = (TextView) contentView.findViewById(R.id.moneyTextView);
-        mPswView = (GridPasswordView) contentView.findViewById(R.id.pswView);
+        mPopupWindow.setFocusable(true);
+        mCloseTextView = (TextView) mContentView.findViewById(R.id.closeTextView);
+        mFlowsTextView = (TextView) mContentView.findViewById(R.id.flowsTextView);
+        mMoneyTextView = (TextView) mContentView.findViewById(R.id.moneyTextView);
+        mPswView = (GridPasswordView) mContentView.findViewById(R.id.pswView);
+
+        mInflowLinearLayout = (LinearLayout) mContentView.findViewById(R.id.inflowLinearLayout);
+        mIconImageView = (ImageView) mContentView.findViewById(R.id.iconImageView);
+        mInflowTextView = (TextView) mContentView.findViewById(R.id.inflowTextView);
+
         mPswView.setClickable(false);
         mPswView.setFocusable(false);
         mPswView.setFocusableInTouchMode(false);
         mPswView.clearFocus();
-        mForgetPwdTextView = (TextView) contentView.findViewById(R.id.forgetPwdTextView);
+        mForgetPwdTextView = (TextView) mContentView.findViewById(R.id.forgetPwdTextView);
         mCloseTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
-                if (mPaymentBuilder != null)
-                    mPaymentBuilder.inputFinish(null);
+                if (mICallBack != null)
+                    mICallBack.close();
             }
         });
         mForgetPwdTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPaymentBuilder != null)
-                    mPaymentBuilder.forgetPwd();
+                if (mICallBack != null)
+                    mICallBack.forgetPassword();
             }
         });
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position<9||position==10){
-                    if (mPswView.getPassWord().length()<PASSWORD_LENGTH){
-                        mPswView.setPassword(mPswView.getPassWord()+mGridAdapter.getItem(position).key);
+                if (position < 9 || position == 10) {
+                    if (mPswView.getPassWord().length() < PASSWORD_LENGTH) {
+                        mPswView.setPassword(mPswView.getPassWord() + mGridAdapter.getItem(position).key);
 
                     }
-                }else if(position==9){
+                } else if (position == 9) {
                     mPswView.setPassword("");
-                }
-                else if(position==11){
-                    if (mPswView.getPassWord().length()>0){
-                        mPswView.setPassword(mPswView.getPassWord().substring(0,mPswView.getPassWord().length()-1));
+                } else if (position == 11) {
+                    if (mPswView.getPassWord().length() > 0) {
+                        mPswView.setPassword(mPswView.getPassWord().substring(0, mPswView.getPassWord().length() - 1));
                     }
                 }
 
-                if (mPswView.getPassWord().length()==PASSWORD_LENGTH){
-                    gridView.setEnabled(false);
+                if (mPswView.getPassWord().length() == PASSWORD_LENGTH) {
+                    mGridView.setEnabled(false);
+                    mForgetPwdTextView.setEnabled(false);
+                    mCloseTextView.setEnabled(false);
+                    mPswView.setEnabled(false);
+                    mContentView.setEnabled(false);
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             dismiss();
-                            if (mPaymentBuilder != null)
-                                mPaymentBuilder.inputFinish(mPswView.getPassWord());
+                            if (mICallBack != null)
+                                mICallBack.inputFinish(mPswView.getPassWord(), mInflowPosition);
                         }
-                    },100);
+                    }, 100);
 
 
                 }
             }
         });
 
+        if (mInflows != null) {
 
+
+            setInflowList();
+        }
     }
 
     public PaymentBuilder show() {
-        popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+        mPopupWindow.showAtLocation(mContentView, Gravity.BOTTOM, 0, 0);
         return this;
     }
 
 
     public void dismiss() {
-        if (popupWindow != null && popupWindow.isShowing()) {
-            popupWindow.dismiss();
+        if (mPopupWindow != null && mPopupWindow.isShowing()) {
+            mPopupWindow.dismiss();
         }
         release();
 
     }
 
     private void release() {
-        contentView = null;
         mContext = null;
-        popupWindow = null;
-        gridView = null;
+        mContentView = null;
+        mPopupWindow = null;
+        mGridView = null;
     }
+
     /**
      * 设置金额去向
      *
      * @param text
      */
 
-    public PaymentBuilder setMoneyWayText(String text) {
-        mIllustrateTextView.setText(text);return this;
+    public PaymentBuilder setFlowsText(String text) {
+        mFlowsTextView.setText(text);
+        return this;
     }
 
     /**
      * 设置金额
      *
-     * @param text
+     * @param money
      */
 
-    public PaymentBuilder setMoneyText(String text) {
-        mMoneyTextView.setText(text);
+
+    public PaymentBuilder setMoney(double money) {
+        mMoneyTextView.setText("￥" + money);
         return this;
     }
 
     /**
+     * 设置下面的流入信息
+     *
+     * @param inflows
+     * @return
+     */
+    private int layout_height;
+    private int layout_width;
+
+
+    public void setInflowList() {
+
+        layout_height = ListAdapter.dip2px(mContext, 24);
+        layout_width = ListAdapter.dip2px(mContext, 24);
+
+        mInflowLinearLayout.setVisibility(View.VISIBLE);
+
+
+        mInflowLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mPopupWindow != null && mPopupWindow.isShowing()) {
+                    mPopupWindow.dismiss();
+
+                    setInflowPopupWindow();
+
+                } else {
+                    Toast.makeText(mContext, "弹窗错误!", Toast.LENGTH_SHORT);
+                }
+            }
+        });
+
+        for (int i = 0; i < mInflows.size(); i++) {
+
+            if (mInflows.get(i).enable)
+                mInflowPosition=i;
+                setInflowText(mInflows.get(i).icon, Inflow.getInflowText(mInflows.get(mInflowPosition).title));
+            break;
+        }
+
+    }
+
+
+    public void setInflowText(String icon, String title) {
+
+        Glide.with(mContext)
+                .load(icon)
+                .override(layout_width, layout_height)
+                .into(mIconImageView);
+
+        mInflowTextView.setText(title);
+    }
+
+
+    public void setInflowPopupWindow() {
+
+
+        View v = LayoutInflater.from(mContext).inflate(
+                R.layout.inflow_layout, null);// 定义后退弹出框
+        final PopupWindow popupWindow = new PopupWindow(v,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setFocusable(true);
+
+        TextView returnTextView = (TextView) v.findViewById(R.id.returnTextView);
+
+        returnTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (mPopupWindow == null || mContentView == null || mGridView == null) {
+
+                    init(mContext);
+                }
+
+//                setInflowText(mInflows.get(mInflowPosition).icon, Inflow.getInflowText(mInflows.get(mInflowPosition).title));
+
+                show();
+
+                if ( popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                }
+
+            }
+        });
+
+        ListView listView = (ListView) v.findViewById(R.id.listView);
+
+        listView.setAdapter(new ListAdapter(mContext,mInflows));
+
+        popupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if (!mInflows.get(i).enable){
+                 return;
+                }
+
+                mInflowPosition = i;
+
+                if (mPopupWindow == null || mContentView == null || mGridView == null) {
+
+                    init(mContext);
+                }
+
+
+                setInflowText(mInflows.get(mInflowPosition).icon, Inflow.getInflowText(mInflows.get(mInflowPosition).title));
+
+                show();
+
+
+                if ( popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                }
+
+            }
+        });
+
+    }
+
+
+    /**
      * 设置忘记密码事件
      *
-     * @param paymentBuilder
+     * @param iCallBack
      */
-    public PaymentBuilder setPaymentBuilder(IPaymentBuilder paymentBuilder) {
-        mPaymentBuilder = paymentBuilder;
+    public PaymentBuilder setCallBack(ICallBack iCallBack) {
+        mICallBack = iCallBack;
         return this;
 
     }
 
-    public PaymentBuilder changeFocus() {
-        mPswView.clearFocus();
-        mCloseTextView.requestFocus();
-        return this;
-    }
 }

@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
-        versionName "0.0.8"
+        versionName "0.1.0"
 
 
 
@@ -27,12 +27,14 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
 
     compile 'com.jungly:gridPasswordView:0.3'
+
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }
 publish {
     userOrg = 'qq14528648'
     groupId = 'com.mark0420.mk_pay'
     artifactId = 'mk-pay'
-    version = '0.0.8'
+    version = '0.1.0'
     description = 'developerkit'
     website = "https://github.com/qq14528648/${rootProject.name}"
 }
