@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MK-View</string>
+    <string name="bottom_dialog_lib_cancel">取消</string>
 </resources>
