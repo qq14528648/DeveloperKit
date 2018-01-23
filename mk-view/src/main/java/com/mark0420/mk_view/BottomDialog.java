@@ -46,10 +46,15 @@ public class BottomDialog extends DialogFragment {
     private String mCancel;
     private String[] items;
     private View mRootView;
-    private OnClickListener mListener;
+    private OnClickListener mOnClickListener;
+    private OnCancelListener mOnCancelListener;
 
-    public void setListener(OnClickListener listener) {
-        mListener = listener;
+    public void setOnClickListener(OnClickListener listener) {
+        mOnClickListener = listener;
+    }
+
+    public void setOnCancelListener(OnCancelListener listener) {
+        this.mOnCancelListener = listener;
     }
 
     @Override
@@ -81,6 +86,7 @@ public class BottomDialog extends DialogFragment {
         super.setCancelable(cancelable);
         dismissCancelable=cancelable;
 
+
     }
 
     @Nullable
@@ -109,8 +115,8 @@ public class BottomDialog extends DialogFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mListener != null) {
-                    mListener.click(position);
+                if (mOnClickListener != null) {
+                    mOnClickListener.click(position);
                 }
 
                 dismiss();
@@ -123,6 +129,9 @@ public class BottomDialog extends DialogFragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mOnCancelListener != null) {
+                    mOnCancelListener.cancel();
+                }
                 dismiss();
             }
         });
@@ -154,5 +163,9 @@ public class BottomDialog extends DialogFragment {
 
     public interface OnClickListener {
         void click(int position);
+    }
+
+    public interface OnCancelListener {
+        void cancel( );
     }
 }

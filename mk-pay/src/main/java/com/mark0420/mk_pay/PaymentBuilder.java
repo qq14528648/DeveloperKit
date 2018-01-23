@@ -3,6 +3,7 @@ package com.mark0420.mk_pay;
 import android.content.Context;
 import android.os.Handler;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class PaymentBuilder {
     }
 
     private Context mContext;
+
     private View mContentView;
     private PopupWindow mPopupWindow;
     private GridView mGridView;
@@ -88,8 +90,8 @@ public class PaymentBuilder {
         mGridView.setAdapter(mGridAdapter);
         mPopupWindow = new PopupWindow(mContentView,
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT);
-        mPopupWindow.setFocusable(true);
+                ViewGroup.LayoutParams.MATCH_PARENT,false);
+
         mCloseTextView = (TextView) mContentView.findViewById(R.id.closeTextView);
         mFlowsTextView = (TextView) mContentView.findViewById(R.id.flowsTextView);
         mMoneyTextView = (TextView) mContentView.findViewById(R.id.moneyTextView);
@@ -104,6 +106,8 @@ public class PaymentBuilder {
         mPswView.setFocusableInTouchMode(false);
         mPswView.clearFocus();
         mForgetPwdTextView = (TextView) mContentView.findViewById(R.id.forgetPwdTextView);
+
+
         mCloseTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,8 +245,8 @@ public class PaymentBuilder {
         for (int i = 0; i < mInflows.size(); i++) {
 
             if (mInflows.get(i).enable)
-                mInflowPosition=i;
-                setInflowText(mInflows.get(i).icon, Inflow.getInflowText(mInflows.get(mInflowPosition).title));
+                mInflowPosition = i;
+            setInflowText(mInflows.get(i).icon, Inflow.getInflowText(mInflows.get(mInflowPosition).title));
             break;
         }
 
@@ -267,8 +271,8 @@ public class PaymentBuilder {
                 R.layout.inflow_layout, null);// 定义后退弹出框
         final PopupWindow popupWindow = new PopupWindow(v,
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT);
-        popupWindow.setFocusable(true);
+                ViewGroup.LayoutParams.MATCH_PARENT,false);
+
 
         TextView returnTextView = (TextView) v.findViewById(R.id.returnTextView);
 
@@ -285,16 +289,19 @@ public class PaymentBuilder {
 
                 show();
 
-                if ( popupWindow.isShowing()) {
+                if (popupWindow.isShowing()) {
                     popupWindow.dismiss();
                 }
 
             }
         });
 
+
+
+
         ListView listView = (ListView) v.findViewById(R.id.listView);
 
-        listView.setAdapter(new ListAdapter(mContext,mInflows));
+        listView.setAdapter(new ListAdapter(mContext, mInflows));
 
         popupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
 
@@ -302,8 +309,8 @@ public class PaymentBuilder {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if (!mInflows.get(i).enable){
-                 return;
+                if (!mInflows.get(i).enable) {
+                    return;
                 }
 
                 mInflowPosition = i;
@@ -319,7 +326,7 @@ public class PaymentBuilder {
                 show();
 
 
-                if ( popupWindow.isShowing()) {
+                if (popupWindow.isShowing()) {
                     popupWindow.dismiss();
                 }
 
