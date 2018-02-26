@@ -90,7 +90,7 @@ public class PaymentBuilder {
         mGridView.setAdapter(mGridAdapter);
         mPopupWindow = new PopupWindow(mContentView,
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT,false);
+                ViewGroup.LayoutParams.MATCH_PARENT,true);
 
         mCloseTextView = (TextView) mContentView.findViewById(R.id.closeTextView);
         mFlowsTextView = (TextView) mContentView.findViewById(R.id.flowsTextView);
@@ -271,7 +271,7 @@ public class PaymentBuilder {
                 R.layout.inflow_layout, null);// 定义后退弹出框
         final PopupWindow popupWindow = new PopupWindow(v,
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT,false);
+                ViewGroup.LayoutParams.MATCH_PARENT,true);
 
 
         TextView returnTextView = (TextView) v.findViewById(R.id.returnTextView);
