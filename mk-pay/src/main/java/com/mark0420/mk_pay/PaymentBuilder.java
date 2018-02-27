@@ -67,6 +67,10 @@ public class PaymentBuilder {
 
     private Handler mHandler = new Handler();
 
+    private boolean mPrimaryPopupWindowHide = false;
+
+    private  boolean mSecondaryPopupWindowHide = true;
+
     /**
      * @param context
      * @param inflows 金额流入方式集合,没有则直接传null
@@ -106,14 +110,27 @@ public class PaymentBuilder {
         mPswView.setFocusableInTouchMode(false);
         mPswView.clearFocus();
         mForgetPwdTextView = (TextView) mContentView.findViewById(R.id.forgetPwdTextView);
+        mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
 
+                if (!mPrimaryPopupWindowHide) {
+
+                    if (mICallBack != null){
+                        mICallBack.close();
+                        release();
+                    }
+
+                }
+            }
+        });
 
         mCloseTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
-                if (mICallBack != null)
-                    mICallBack.close();
+//                if (mICallBack != null)
+//                    mICallBack.close();
             }
         });
         mForgetPwdTextView.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +184,7 @@ public class PaymentBuilder {
     }
 
     public PaymentBuilder show() {
+        mPrimaryPopupWindowHide = false;
         mPopupWindow.showAtLocation(mContentView, Gravity.BOTTOM, 0, 0);
         return this;
     }
@@ -231,6 +249,9 @@ public class PaymentBuilder {
         mInflowLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                mPrimaryPopupWindowHide = true;
+
                 if (mPopupWindow != null && mPopupWindow.isShowing()) {
                     mPopupWindow.dismiss();
 
@@ -280,6 +301,9 @@ public class PaymentBuilder {
             @Override
             public void onClick(View view) {
 
+
+                mSecondaryPopupWindowHide=true;
+
                 if (mPopupWindow == null || mContentView == null || mGridView == null) {
 
                     init(mContext);
@@ -297,11 +321,29 @@ public class PaymentBuilder {
         });
 
 
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
 
+                if (!mSecondaryPopupWindowHide){
+
+                    if (mICallBack != null){
+                        mICallBack.close();
+
+                        release();
+
+                    }
+
+                }
+
+            }
+        });
 
         ListView listView = (ListView) v.findViewById(R.id.listView);
 
         listView.setAdapter(new ListAdapter(mContext, mInflows));
+
+        mSecondaryPopupWindowHide=false;
 
         popupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
 
@@ -312,6 +354,9 @@ public class PaymentBuilder {
                 if (!mInflows.get(i).enable) {
                     return;
                 }
+
+
+                mSecondaryPopupWindowHide=true;
 
                 mInflowPosition = i;
 
