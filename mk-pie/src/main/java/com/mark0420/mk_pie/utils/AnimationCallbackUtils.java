@@ -1,4 +1,4 @@
-package com.mark0420.mk_pie.animatedpieview.utils;
+package com.mark0420.mk_pie.utils;
 
 import android.view.animation.Animation;
 

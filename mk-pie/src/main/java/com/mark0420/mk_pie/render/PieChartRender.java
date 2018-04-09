@@ -1,4 +1,4 @@
-package com.mark0420.mk_pie.animatedpieview.render;
+package com.mark0420.mk_pie.render;
 
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
@@ -15,12 +15,12 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
 
-import com.mark0420.mk_pie.animatedpieview.AnimatedPieViewConfig;
-import com.mark0420.mk_pie.animatedpieview.IPieView;
-import com.mark0420.mk_pie.animatedpieview.data.IPieInfo;
-import com.mark0420.mk_pie.animatedpieview.utils.AnimationCallbackUtils;
-import com.mark0420.mk_pie.animatedpieview.utils.PLog;
-import com.mark0420.mk_pie.animatedpieview.utils.Util;
+import com.mark0420.mk_pie.AnimatedPieViewConfig;
+import com.mark0420.mk_pie.IPieView;
+import com.mark0420.mk_pie.data.IPieInfo;
+import com.mark0420.mk_pie.utils.AnimationCallbackUtils;
+import com.mark0420.mk_pie.utils.PLog;
+import com.mark0420.mk_pie.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;

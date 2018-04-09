@@ -1,8 +1,8 @@
-package com.mark0420.mk_pie.animatedpieview.callback;
+package com.mark0420.mk_pie.callback;
 
 import android.support.annotation.NonNull;
 
-import com.mark0420.mk_pie.animatedpieview.data.IPieInfo;
+import com.mark0420.mk_pie.data.IPieInfo;
 
 /**
  * Created by 大灯泡 on 2017/11/10.

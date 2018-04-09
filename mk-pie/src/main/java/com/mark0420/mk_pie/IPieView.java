@@ -1,9 +1,9 @@
-package com.mark0420.mk_pie.animatedpieview;
+package com.mark0420.mk_pie;
 
 import android.content.Context;
 import android.view.View;
 
-import com.mark0420.mk_pie.animatedpieview.manager.PieManager;
+import com.mark0420.mk_pie.manager.PieManager;
 
 /**
  * Created by 大灯泡 on 2018/2/1.

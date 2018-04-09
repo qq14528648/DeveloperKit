@@ -1,10 +1,10 @@
-package com.mark0420.mk_pie.animatedpieview.render;
+package com.mark0420.mk_pie.render;
 
 import android.graphics.Canvas;
 import android.support.annotation.Nullable;
 
-import com.mark0420.mk_pie.animatedpieview.IPieView;
-import com.mark0420.mk_pie.animatedpieview.manager.PieManager;
+import com.mark0420.mk_pie.IPieView;
+import com.mark0420.mk_pie.manager.PieManager;
 
 /**
  * Created by 大灯泡 on 2018/2/1.

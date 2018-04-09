@@ -1,4 +1,4 @@
-package com.mark0420.mk_pie.animatedpieview;
+package com.mark0420.mk_pie;
 
 import android.graphics.Paint;
 import android.support.annotation.FloatRange;
@@ -8,11 +8,10 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
 
-import com.mark0420.mk_pie.animatedpieview.callback.OnPieSelectListener;
-import com.mark0420.mk_pie.animatedpieview.data.IPieInfo;
-import com.mark0420.mk_pie.animatedpieview.utils.Util;
+import com.mark0420.mk_pie.callback.OnPieSelectListener;
+import com.mark0420.mk_pie.data.IPieInfo;
+import com.mark0420.mk_pie.utils.Util;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

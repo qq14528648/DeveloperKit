@@ -1,14 +1,14 @@
-package com.mark0420.mk_pie.animatedpieview.render;
+package com.mark0420.mk_pie.render;
 
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.text.TextUtils;
 
-import com.mark0420.mk_pie.animatedpieview.AnimatedPieViewConfig;
-import com.mark0420.mk_pie.animatedpieview.data.IPieInfo;
-import com.mark0420.mk_pie.animatedpieview.data.SimplePieInfo;
-import com.mark0420.mk_pie.animatedpieview.utils.DegreeUtil;
-import com.mark0420.mk_pie.animatedpieview.utils.PLog;
+import com.mark0420.mk_pie.AnimatedPieViewConfig;
+import com.mark0420.mk_pie.data.IPieInfo;
+import com.mark0420.mk_pie.data.SimplePieInfo;
+import com.mark0420.mk_pie.utils.DegreeUtil;
+import com.mark0420.mk_pie.utils.PLog;
 
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;

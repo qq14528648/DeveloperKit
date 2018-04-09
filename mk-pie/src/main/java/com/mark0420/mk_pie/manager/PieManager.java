@@ -1,4 +1,4 @@
-package com.mark0420.mk_pie.animatedpieview.manager;
+package com.mark0420.mk_pie.manager;
 
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -6,10 +6,10 @@ import android.graphics.RectF;
 import android.text.TextPaint;
 import android.text.TextUtils;
 
-import com.mark0420.mk_pie.animatedpieview.IPieView;
-import com.mark0420.mk_pie.animatedpieview.render.BaseRender;
-import com.mark0420.mk_pie.animatedpieview.utils.PLog;
-import com.mark0420.mk_pie.animatedpieview.utils.Util;
+import com.mark0420.mk_pie.IPieView;
+import com.mark0420.mk_pie.render.BaseRender;
+import com.mark0420.mk_pie.utils.PLog;
+import com.mark0420.mk_pie.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;

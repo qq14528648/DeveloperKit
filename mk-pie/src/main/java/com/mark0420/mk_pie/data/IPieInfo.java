@@ -1,4 +1,4 @@
-package com.mark0420.mk_pie.animatedpieview.data;
+package com.mark0420.mk_pie.data;
 
 import android.support.annotation.ColorInt;
 
