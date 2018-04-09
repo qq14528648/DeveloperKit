@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 10
-        versionName "0.0.11"
+        versionName "0.0.13"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -39,7 +39,7 @@ dependencies {
 //    userOrg = 'qq14528648'
 //    groupId = 'com.mark0420.mk_view'
 //    artifactId = 'mk-view'
-//    version = '0.0.11'
+//    version = '0.0.13'
 //    description = 'developerkit'
 //    website = "https://github.com/qq14528648/${rootProject.name}"
 //}

@@ -20,7 +20,7 @@ public class AnimationUtils {
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
                 1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
 
-        slide.setDuration(400);
+        slide.setDuration(250);
         slide.setFillAfter(true);
         slide.setFillEnabled(true);
         view.startAnimation(slide);
@@ -49,7 +49,7 @@ public class AnimationUtils {
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
                 0.0f, Animation.RELATIVE_TO_SELF, 1.0f);
 
-        slide.setDuration(400);
+        slide.setDuration(250);
         slide.setFillAfter(true);
         slide.setFillEnabled(true);
         view.startAnimation(slide);

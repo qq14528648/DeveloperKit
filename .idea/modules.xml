@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/DeveloperKit.iml" filepath="$PROJECT_DIR$/DeveloperKit.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mk-pay/mk-pay.iml" filepath="$PROJECT_DIR$/mk-pay/mk-pay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mk-pie/mk-pie.iml" filepath="$PROJECT_DIR$/mk-pie/mk-pie.iml" />
       <module fileurl="file://$PROJECT_DIR$/mk-utils/mk-utils.iml" filepath="$PROJECT_DIR$/mk-utils/mk-utils.iml" />
       <module fileurl="file://$PROJECT_DIR$/mk-view/mk-view.iml" filepath="$PROJECT_DIR$/mk-view/mk-view.iml" />
     </modules>

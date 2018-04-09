@@ -176,7 +176,7 @@ public class PaymentBuilder {
             }
         });
 
-        if (mInflows != null) {
+        if (mInflows != null&&mInflows.size()!=0) {
 
 
             setInflowList();
