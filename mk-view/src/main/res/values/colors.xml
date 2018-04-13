@@ -7,4 +7,8 @@
     <color name="bottom_lib_dialog_cancel_text_color">#007AFF</color>
 
     <drawable name="recycler_divider">#00000000</drawable>
+
+    <color name="colorSharePress">#DDE1E1</color>
+    <color name="colorShare">#FFFFFF</color>
+
 </resources>

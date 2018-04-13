@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:alpha="0.3"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+      />
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/shareQQTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="16dp"
+                android:drawableTop="@drawable/ic_share_qq"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="8dp"
+                android:textSize="14sp"
+                android:text="QQ好友"
+                android:textColor="#DE000000"/>
+            <TextView
+                android:id="@+id/shareWechatTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="16dp"
+                android:drawableTop="@drawable/ic_share_wechat"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="8dp"
+                android:textSize="14sp"
+                android:text="微信好友"
+                android:textColor="#DE000000"/>
+        </LinearLayout>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#10000000"/>
+        <TextView
+            android:id="@+id/shareCancelTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:background="@drawable/share_cancel_item_selector"
+            android:padding="10dp"
+            android:text="取消"/>
+
+</LinearLayout>

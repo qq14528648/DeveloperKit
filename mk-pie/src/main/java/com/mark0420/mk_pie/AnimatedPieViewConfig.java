@@ -61,7 +61,7 @@ public class AnimatedPieViewConfig {
     private static final long DEFAULT_TOUCH_FLOATDOWN_DURATION = 800;
     private static final float DEFAULT_SHADOW_BLUR_RADIUS = 20;
     private static final float DEFAULT_FLOAT_EXPAND_ANGLE = 0;
-    private static final float DEFAULT_DESC_TEXT_SIZE = 34;
+    private static final float DEFAULT_DESC_TEXT_SIZE = 40;
     private static final float DEFAULT_SPLIT_ANGLE = 0;
     private static final float DEFAULT_FLOAT_EXPAND_SIZE = 15;
     private static final int DEFAULT_FOCUS_ALPHA_TYPE = FOCUS_WITHOUT_ALPHA;

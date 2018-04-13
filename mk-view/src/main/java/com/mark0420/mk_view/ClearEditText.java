@@ -216,6 +216,9 @@ public class ClearEditText extends AppCompatEditText {
                 setError(null);
                 this.setText("");
             }
+        }else if (event.getAction() == MotionEvent.ACTION_UP){
+
+            performClick();
         }
         return super.onTouchEvent(event);
     }
