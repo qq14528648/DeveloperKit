@@ -3,7 +3,6 @@ package com.mark0420.mk_pay;
 import android.content.Context;
 import android.os.Handler;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

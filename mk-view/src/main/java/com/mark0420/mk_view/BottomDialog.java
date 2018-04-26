@@ -62,6 +62,7 @@ public class BottomDialog extends DialogFragment {
         super.onStart();
         Window window = getDialog().getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
+        params.dimAmount = 0.3f;
         params.gravity = Gravity.BOTTOM;
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(params);
@@ -158,7 +159,9 @@ public class BottomDialog extends DialogFragment {
                 isAnimation = false;
                 BottomDialog.super.dismiss();
             }
+
         });
+
     }
 
     public interface OnClickListener {

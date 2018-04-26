@@ -1,5 +1,6 @@
 package com.mark0420.mk_pie;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IntDef;
@@ -11,6 +12,7 @@ import android.view.animation.Interpolator;
 
 import com.mark0420.mk_pie.callback.OnPieSelectListener;
 import com.mark0420.mk_pie.data.IPieInfo;
+import com.mark0420.mk_pie.utils.UIUtil;
 import com.mark0420.mk_pie.utils.Util;
 
 import java.lang.annotation.Retention;
@@ -91,7 +93,7 @@ public class AnimatedPieViewConfig {
     private boolean drawText = true;
     private float splitAngle = DEFAULT_SPLIT_ANGLE;
     private boolean animPie = true;
-    private boolean canTouch = true;
+    private boolean canTouch = false;
     private boolean animTouch = true;
     private OnPieSelectListener mSelectListener;
     @FocusAlpha
@@ -187,6 +189,12 @@ public class AnimatedPieViewConfig {
 
     public AnimatedPieViewConfig textSize(float textSize) {
         this.textSize = textSize;
+        return this;
+    }
+
+    public AnimatedPieViewConfig textSize(Context context,float textSize) {
+
+        this.textSize =    UIUtil.sp2px2(context,textSize);
         return this;
     }
 

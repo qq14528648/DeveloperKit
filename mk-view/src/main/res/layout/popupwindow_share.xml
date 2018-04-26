@@ -12,6 +12,18 @@
       />
 
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:minHeight="?attr/actionBarSize"
+        android:padding="8dp"
+        android:text="应用分享"
+        android:textColor="#DE000000"
+        android:textSize="16sp" />
+
         <LinearLayout
 
             android:layout_width="match_parent"
@@ -31,6 +43,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:drawablePadding="8dp"
+                android:background="@drawable/share_cancel_item_selector"
                 android:textSize="14sp"
                 android:text="QQ好友"
                 android:textColor="#DE000000"/>
@@ -43,25 +56,24 @@
                 android:drawableTop="@drawable/ic_share_wechat"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/share_cancel_item_selector"
                 android:drawablePadding="8dp"
                 android:textSize="14sp"
                 android:text="微信好友"
                 android:textColor="#DE000000"/>
         </LinearLayout>
 
-        <TextView
 
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="#10000000"/>
-        <TextView
-            android:id="@+id/shareCancelTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:background="@drawable/share_cancel_item_selector"
-            android:padding="10dp"
-            android:text="取消"/>
+    <TextView
+        android:id="@+id/shareCancelTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:gravity="center"
+        android:textColor="#DE000000"
+        android:textSize="16sp"
+        android:background="@drawable/share_cancel_item_selector"
+        android:padding="10dp"
+        android:text="返回"/>
 
 </LinearLayout>

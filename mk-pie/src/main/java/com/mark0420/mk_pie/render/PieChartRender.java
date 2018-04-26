@@ -266,7 +266,7 @@ public class PieChartRender extends BaseRender implements ITouchRender {
         //根据touch扩大量修正指示线和描述文字的位置
         float fixPos = (wrapper.equals(mTouchHelper.floatingWrapper) ? getFixTextPos(wrapper) : 0) + (wrapper.equals(mTouchHelper.lastFloatWrapper) ? getFixTextPos(wrapper) : 0);
         // FIXME: 2018/04/08 修改
-       // float fixPos = (float) wrapper.getRate()*20;
+        // float fixPos = (float) wrapper.getRate()*20;
 
 
         final float pointMargins = fixPos
@@ -294,7 +294,7 @@ public class PieChartRender extends BaseRender implements ITouchRender {
 
         String desc = TextUtils.isEmpty(wrapper.getDesc()) ? "null" : wrapper.getDesc();
 
-        String value =  wrapper.getValue().length()>desc.length()?wrapper.getValue():desc;
+        String value = wrapper.getValue().length() > desc.length() ? wrapper.getValue() : desc;
 
 
         float textLength = mPieManager.measureTextBounds(value, (int) mConfig.getTextSize()).width() + mConfig.getTextMargin();
@@ -342,6 +342,17 @@ public class PieChartRender extends BaseRender implements ITouchRender {
                 break;
 
         }
+
+        if (guideLineEndY1>0){
+
+            guideLineEndY1 = guideLineEndY1 + Math.min(30, guideLineEndY1 / 4);
+
+        }else{
+            guideLineEndY1 = guideLineEndY1 + Math.max(-30, guideLineEndY1 / 4);
+        }
+
+
+
         guideLineEndY2 = guideLineEndY1;
 
         paint.setStyle(Paint.Style.STROKE);
@@ -364,7 +375,7 @@ public class PieChartRender extends BaseRender implements ITouchRender {
         paint.setAlpha((int) (255 * progress));
         float textStartX = calculateTextStartX(guideLineEndX1, guideLineEndX2, direction, mPieManager.measureTextBounds(wrapper.getDesc(), paint));
         // FIXME: 2018/04/08 修改 +10
-        float textStartY = calculateTextStartY(guideLineEndY1, guideLineEndY2, direction, mPieManager.measureTextBounds(wrapper.getDesc(), paint))+10;
+        float textStartY = calculateTextStartY(guideLineEndY1, guideLineEndY2, direction, mPieManager.measureTextBounds(wrapper.getDesc(), paint)) + 10;
         //画文字
         canvas.drawText(wrapper.getDesc(), textStartX, textStartY, paint);
 
@@ -394,6 +405,7 @@ public class PieChartRender extends BaseRender implements ITouchRender {
                 return guideLineEndX1;
         }
     }
+
     // FIXME: 2018/04/08 修改
     private float calculateTextStartY(float guideLineEndY1, float guideLineEndY2, LineDirection direction, Rect textBounds) {
         final int textGravity = mConfig.getTextGravity();
@@ -456,6 +468,7 @@ public class PieChartRender extends BaseRender implements ITouchRender {
 //                return guideLineEndY1 - mConfig.getTextMargin() - textBounds.height() / 2;
 //        }
     }
+
     private LineDirection calculateLineGravity(float startX, float startY) {
         if (startX > 0) {
             //在右边
@@ -475,13 +488,13 @@ public class PieChartRender extends BaseRender implements ITouchRender {
     private LineDirection calculateLineGravity1(float startX, float startY) {
         if (startX > 0) {
             //在右边
-            return startY > 0 ?  LineDirection.TOP_RIGHT:LineDirection.BOTTOM_RIGHT ;
+            return startY > 0 ? LineDirection.TOP_RIGHT : LineDirection.BOTTOM_RIGHT;
         } else if (startX < 0) {
             //在左边
-            return startY > 0 ?  LineDirection.TOP_LEFT:LineDirection.BOTTOM_LEFT ;
+            return startY > 0 ? LineDirection.TOP_LEFT : LineDirection.BOTTOM_LEFT;
         } else if (startY == 0) {
             //刚好中间
-            return startX > 0 ?  LineDirection.CENTER_LEFT:LineDirection.CENTER_RIGHT ;
+            return startX > 0 ? LineDirection.CENTER_LEFT : LineDirection.CENTER_RIGHT;
         }
         return LineDirection.BOTTOM_RIGHT;
     }
@@ -604,7 +617,7 @@ public class PieChartRender extends BaseRender implements ITouchRender {
                 pieRadius = Math.max(minPieRadius, pieRadius);
             } else {
                 //饼图只需要看外径
-                pieRadius = minSize / 2 - maxDescTextLength/3*2 - mConfig.getGuideLineMarginStart();
+                pieRadius = minSize / 2 - maxDescTextLength - mConfig.getGuideLineMarginStart();
             }
         } else {
             //优先判定size

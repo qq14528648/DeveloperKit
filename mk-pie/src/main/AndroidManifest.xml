@@ -1,3 +1,9 @@
-<manifest package="com.mark0420.mk_pie"
-          xmlns:android="http://schemas.android.com/apk/res/android"/>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
+    package="com.mark0420.mk_pie">
+
+    <application>
+
+    </application>
+
+</manifest>

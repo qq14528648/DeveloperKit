@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 15
-        versionName "0.0.15"
+        versionCode 18
+        versionName "0.0.18"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -39,7 +39,7 @@ publish {
     userOrg = 'qq14528648'
     groupId = 'com.mark0420.mk_view'
     artifactId = 'mk-view'
-    version = '0.0.15'
+    version = '0.0.18'
     description = 'developerkit'
     website = "https://github.com/qq14528648/${rootProject.name}"
 }

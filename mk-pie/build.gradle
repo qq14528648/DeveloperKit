@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 2
-        versionName "0.0.6"
+        versionCode 11
+        versionName "0.1.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -30,16 +30,12 @@ dependencies {
 
     compile 'com.android.support:appcompat-v7:26.+'
 
-
-
-//    compile 'com.flaviofaria:kenburnsview:1.0.7'
-
 }
 //publish {
 //    userOrg = 'qq14528648'
 //    groupId = 'com.mark0420.mk_pie'
 //    artifactId = 'mk-pie'
-//    version = '0.0.6'
+//    version = '0.1.1'
 //    description = 'developerkit'
 //    website = "https://github.com/qq14528648/${rootProject.name}"
 //}
