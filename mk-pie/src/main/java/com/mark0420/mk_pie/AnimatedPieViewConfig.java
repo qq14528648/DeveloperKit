@@ -58,7 +58,7 @@ public class AnimatedPieViewConfig {
     private static final String DEFAULT_AUTO_DESC_FORMAT = "%1$s%%";
     private static final int DEFAULT_STROKE_WIDTH = 80;
     private static final float DEFAULT_START_DEGREE = 0f;
-    private static final long DEFAULT_ANIMATION_DURATION = 2000;
+    private static final long DEFAULT_ANIMATION_DURATION =1000;
     private static final long DEFAULT_TOUCH_FLOATUP_DURATION = 500;
     private static final long DEFAULT_TOUCH_FLOATDOWN_DURATION = 800;
     private static final float DEFAULT_SHADOW_BLUR_RADIUS = 20;

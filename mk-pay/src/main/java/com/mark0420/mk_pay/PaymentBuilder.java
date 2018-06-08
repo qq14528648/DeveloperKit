@@ -2,6 +2,9 @@ package com.mark0420.mk_pay;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jungly.gridpasswordview.GridPasswordView;
+import com.jungly.gridpasswordview.imebugfixer.ImeDelBugFixedEditText;
 
 import java.util.List;
 
@@ -49,7 +53,7 @@ public class PaymentBuilder {
     private GridView mGridView;
     private ICallBack mICallBack;
     private GridAdapter mGridAdapter;
-
+    private View mLineView;
     private TextView mCloseTextView;
     private TextView mMoneyTextView;
     private GridPasswordView mPswView;
@@ -100,15 +104,20 @@ public class PaymentBuilder {
         mMoneyTextView = (TextView) mContentView.findViewById(R.id.moneyTextView);
         mPswView = (GridPasswordView) mContentView.findViewById(R.id.pswView);
 
+
+        mLineView = mContentView.findViewById(R.id.lineView);
+
+
         mInflowLinearLayout = (LinearLayout) mContentView.findViewById(R.id.inflowLinearLayout);
         mIconImageView = (ImageView) mContentView.findViewById(R.id.iconImageView);
         mInflowTextView = (TextView) mContentView.findViewById(R.id.inflowTextView);
 
-        mPswView.setClickable(false);
-        mPswView.setFocusable(false);
-        mPswView.setFocusableInTouchMode(false);
-        mPswView.clearFocus();
         mForgetPwdTextView = (TextView) mContentView.findViewById(R.id.forgetPwdTextView);
+
+
+        ImeDelBugFixedEditText    mInputView = (ImeDelBugFixedEditText)mPswView. findViewById(com.jungly.gridpasswordview.R.id.inputView);
+        mInputView.setInputType(InputType.TYPE_NULL);
+
         mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -181,6 +190,15 @@ public class PaymentBuilder {
             setInflowList();
         }
     }
+
+
+    public PaymentBuilder setColor(@ColorInt int colorRes) {
+        mLineView.setBackgroundColor(colorRes);
+        mForgetPwdTextView.setTextColor(colorRes);
+        return this;
+    }
+
+
 
     public PaymentBuilder show() {
         mPrimaryPopupWindowHide = false;

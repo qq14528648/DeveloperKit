@@ -45,6 +45,7 @@ public class KeyboardBuilder {
         mGridAdapter= new GridAdapter(mContext);
         gridView.setAdapter(mGridAdapter);
 
+
         popupWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
